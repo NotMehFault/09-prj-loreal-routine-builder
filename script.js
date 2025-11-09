@@ -418,22 +418,18 @@ generateRoutineBtn.addEventListener("click", async () => {
   }
 
   // collect selected product data
-  const payload = selectedProducts.map((p) => ({
-    name: p.name,
-    brand: p.brand,
-    category: p.category,
-    description: p.description,
-  }));
+  // for the routine prompt we only display the product names
+  const payload = selectedProducts.map((p) => p.name);
 
   const system = {
     role: "system",
     content:
-      "You are a helpful routine builder. Create a concise personalized routine using only the supplied products. Include when/how to use each product (AM/PM/order).",
+      "You are a helpful routine builder using Loreal products. Create a concise personalized routine using only the supplied products. Include when/how to use each product (AM/PM/order). Do not answer questions unrelated to the routine, products, or basic skincare principles.",
   };
   const user = {
     role: "user",
-    content: `Create a personalized routine using these products: ${JSON.stringify(
-      payload
+    content: `Create a personalized routine using these products: ${payload.join(
+      ", "
     )}`,
   };
 
